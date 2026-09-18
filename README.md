@@ -1,22 +1,24 @@
-# DJI Mic for Wispr Flow
+<h1 align="center">DJI Mic for Wispr Flow</h1>
 
-Use the button on your **DJI Mic Mini** transmitter to control [Wispr Flow](https://wisprflow.ai) on macOS. Click to start dictating, click to stop, and click once more to send.
+<p align="center">
+  Use the button on your DJI Mic Mini to dictate with <a href="https://wisprflow.ai">Wispr Flow</a> on macOS.<br>
+  Click to talk, click to stop, click once more to send.
+</p>
+
+<p align="center">
+  <img alt="macOS 27" src="https://img.shields.io/badge/macOS-27-1b1f24?logo=apple&amp;logoColor=white">
+  <img alt="Hammerspoon" src="https://img.shields.io/badge/Hammerspoon-module-3e63dd">
+  <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-1f7a4d">
+</p>
+
+<p align="center">
+  <img src="docs/images/three-clicks.svg" width="848" alt="Click the transmitter button and Wispr starts listening. Click again and it stops and pastes your text. Click a third time within 4 seconds and Return is pressed, sending the message. After sending, or after 4 seconds with no click, it goes back to idle.">
+</p>
 
 It uses a macOS built-in tool (`hidutil`) and a small [Hammerspoon](https://www.hammerspoon.org) module:
 - No Karabiner, and no driver or system extension to approve.
 - No sudo.
 - Your keyboard's volume keys keep working.
-
-## Usage
-
-Click the link button on the transmitter clipped to your shirt:
-
-| Click | What happens |
-|---|---|
-| 1st | Wispr starts hands-free dictation |
-| 2nd | Wispr stops and pastes your text; **↩ Press again to send** appears for 4 seconds |
-| 3rd, while that's showing | Presses Return, so your message goes out |
-| 3rd, after it's gone | Starts a new dictation |
 
 Wait for your text to appear before the third click. A click before Wispr pastes sends Return too early.
 
@@ -56,18 +58,13 @@ Click the button once and Wispr should start listening.
 
 ## How it works
 
-The DJI receiver reports the button as a **volume-up key**. You can't just remap volume-up in software, because that would hijack your keyboard's volume key too: once a keypress reaches apps like Hammerspoon, macOS no longer says which device it came from.
+<p align="center">
+  <img src="docs/images/how-it-works.svg" width="880" alt="The DJI receiver and your keyboard both send the same Volume Up key. In the macOS HID layer, which still knows which device sent a key, hidutil remaps Volume Up to F18 on the DJI receiver only. Below that layer apps only see the key: Hammerspoon catches F18 and opens a Wispr Flow link, while the keyboard's Volume Up still changes the system volume.">
+</p>
 
-One layer lower, macOS still knows. Its built-in `hidutil` can remap keys on **one device only**. So this project turns the receiver's volume-up into **F18**, a key nothing else sends, before any app sees it. Hammerspoon then treats F18 as the button and drives Wispr Flow through its `wispr-flow://` links.
+The DJI receiver reports the button as a **volume-up key**, the same key your keyboard sends. You can't just remap volume-up in an app like Hammerspoon, because by the time a keypress reaches it, macOS no longer says which device it came from. You'd hijack your keyboard's volume key too.
 
-```mermaid
-flowchart LR
-    button["Transmitter button"] -->|radio| receiver["Receiver on USB-C<br/>sends volume-up"]
-    receiver --> remap["macOS HID layer<br/>hidutil remaps this device's<br/>volume-up to F18"]
-    remap --> hammerspoon["Hammerspoon<br/>F18 hotkey"]
-    hammerspoon -->|"wispr-flow://start-hands-free<br/>wispr-flow://stop-hands-free"| wispr["Wispr Flow"]
-    hammerspoon -->|"third click: Return"| app["The app you're typing in"]
-```
+One layer lower, macOS still knows. Its built-in `hidutil` can remap keys on **one device only**. So the receiver's volume-up becomes **F18**, a key nothing else sends, before any app sees it. Hammerspoon then treats F18 as the button and drives Wispr Flow through its `wispr-flow://` links.
 
 The module also takes care of a few details:
 - **Keeps the remap in place.** macOS drops the remap when the receiver is unplugged or the Mac restarts, so the module reapplies it when it loads, when the receiver is plugged in, and after the Mac wakes.
@@ -115,6 +112,8 @@ Everything to change is at the top of [`hammerspoon/dji_wispr.lua`](hammerspoon/
 | `just lint` | Lints the scripts, syntax-checks the Lua, and validates the Karabiner rules. |
 
 Building the probes needs the Xcode Command Line Tools. `just lint` also needs `shellcheck` and `luajit`. The test and probe scripts undo their remap when they exit, including on Ctrl-C.
+
+The diagrams in `docs/images/` are hand-written SVGs. Each one has its own light and dark palette.
 
 ## Credits
 

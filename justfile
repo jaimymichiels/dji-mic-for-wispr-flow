@@ -38,11 +38,12 @@ mapping:
 console:
     /Applications/Hammerspoon.app/Contents/Frameworks/hs/hs -c 'hs.console.getConsole()' | grep dji_wispr
 
-# Lint the scripts, syntax-check the module, validate the Karabiner rules
+# Lint the scripts, syntax-check the module, validate the Karabiner rules and diagrams
 lint:
     shellcheck scripts/*.sh
     luajit -e "assert(loadfile('hammerspoon/dji_wispr.lua'))"
     python3 -m json.tool karabiner/dji_mic_wispr.json >/dev/null
+    xmllint --noout docs/images/*.svg
 
 # The public repo is a sanitized mirror, never a branch of this one: its history must never
 # contain internal references or AI attribution, so nothing is pushed between the repos

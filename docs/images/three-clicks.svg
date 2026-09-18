@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 848 256" width="848" height="256" role="img" aria-labelledby="three-clicks-title three-clicks-desc">
+  <title id="three-clicks-title">One button, three clicks</title>
+  <desc id="three-clicks-desc">Click the transmitter button and Wispr Flow starts listening. Click again and it stops and pastes your text. Click a third time within 4 seconds and Return is pressed, sending the message. After sending, or after 4 seconds with no click, it goes back to idle.</desc>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .bg { fill: #f7f8fa; }
+    .card { fill: #ffffff; stroke: #d5dae0; stroke-width: 1; }
+    .field { fill: #f7f8fa; stroke: #c9d0d8; stroke-width: 1; }
+    .key { fill: #ffffff; stroke: #b8c0ca; stroke-width: 1; }
+    .ink { fill: #1b1f24; }
+    .muted { fill: #5e6773; }
+    .eyebrow { fill: #5e6773; font-size: 11.5px; font-weight: 600; letter-spacing: 0.08em; }
+    .grille { stroke: #b8c0ca; stroke-width: 2; stroke-linecap: round; }
+    .line { stroke: #1b1f24; stroke-width: 1.5; fill: none; }
+    .line-muted { stroke: #8a939e; stroke-width: 1.5; fill: none; stroke-dasharray: 5 5; }
+    .arrowhead { fill: #1b1f24; }
+    .arrowhead-muted { fill: #8a939e; }
+    .accent { fill: #e5484d; }
+    .accent-ring { fill: none; stroke: #e5484d; stroke-width: 1.5; opacity: 0.35; }
+    .accent-text { fill: #c7353a; }
+    .pill { fill: #e6ecff; }
+    .remap { fill: #3451b2; }
+    .sent { fill: #1f7a4d; }
+    .on-sent { fill: #ffffff; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #0f1318; }
+      .card { fill: #171c22; stroke: #2d343c; }
+      .field { fill: #0f1318; stroke: #3a424c; }
+      .key { fill: #171c22; stroke: #4a535e; }
+      .ink { fill: #e6eaef; }
+      .muted, .eyebrow { fill: #9aa4af; }
+      .grille { stroke: #4a535e; }
+      .line { stroke: #e6eaef; }
+      .line-muted { stroke: #6b7580; }
+      .arrowhead { fill: #e6eaef; }
+      .arrowhead-muted { fill: #6b7580; }
+      .accent { fill: #ff6369; }
+      .accent-ring { stroke: #ff6369; }
+      .accent-text { fill: #ff7b80; }
+      .pill { fill: #1f2a52; }
+      .remap { fill: #9db1ff; }
+      .sent { fill: #22724b; }
+    }
+  </style>
+  <defs>
+    <marker id="three-clicks-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto">
+      <path class="arrowhead" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+    <marker id="three-clicks-arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto">
+      <path class="arrowhead-muted" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="848" height="256" rx="16"/>
+
+  <!-- Idle: the transmitter and its button -->
+  <rect class="card" x="44" y="42" width="20" height="16" rx="4"/>
+  <rect class="card" x="30" y="52" width="48" height="80" rx="13"/>
+  <line class="grille" x1="45" y1="68" x2="63" y2="68"/>
+  <line class="grille" x1="45" y1="75" x2="63" y2="75"/>
+  <line class="grille" x1="45" y1="82" x2="63" y2="82"/>
+  <circle class="accent-ring" cx="54" cy="108" r="14"/>
+  <circle class="accent" cx="54" cy="108" r="9"/>
+  <text class="muted" x="54" y="156" text-anchor="middle" font-size="13">Idle</text>
+
+  <!-- click 1 -->
+  <line class="line" x1="86" y1="111" x2="136" y2="111" marker-end="url(#three-clicks-arrow)"/>
+  <text class="accent-text" x="111" y="101" text-anchor="middle" font-size="12.5" font-weight="600">click</text>
+
+  <!-- Listening -->
+  <rect class="card" x="144" y="36" width="200" height="150" rx="12"/>
+  <text class="eyebrow" x="160" y="60">LISTENING</text>
+  <rect class="accent" x="172" y="101" width="4" height="10" rx="2"/>
+  <rect class="accent" x="182" y="97" width="4" height="18" rx="2"/>
+  <rect class="accent" x="192" y="91" width="4" height="30" rx="2"/>
+  <rect class="accent" x="202" y="84" width="4" height="44" rx="2"/>
+  <rect class="accent" x="212" y="93" width="4" height="26" rx="2"/>
+  <rect class="accent" x="222" y="79" width="4" height="54" rx="2"/>
+  <rect class="accent" x="232" y="88" width="4" height="36" rx="2"/>
+  <rect class="accent" x="242" y="75" width="4" height="62" rx="2"/>
+  <rect class="accent" x="252" y="90" width="4" height="32" rx="2"/>
+  <rect class="accent" x="262" y="82" width="4" height="48" rx="2"/>
+  <rect class="accent" x="272" y="94" width="4" height="24" rx="2"/>
+  <rect class="accent" x="282" y="86" width="4" height="40" rx="2"/>
+  <rect class="accent" x="292" y="97" width="4" height="18" rx="2"/>
+  <rect class="accent" x="302" y="92" width="4" height="28" rx="2"/>
+  <rect class="accent" x="312" y="100" width="4" height="12" rx="2"/>
+  <text class="ink" x="160" y="168" font-size="13.5">Wispr is listening</text>
+
+  <!-- click 2 -->
+  <line class="line" x1="350" y1="111" x2="377" y2="111" marker-end="url(#three-clicks-arrow)"/>
+  <text class="accent-text" x="364" y="101" text-anchor="middle" font-size="12.5" font-weight="600">click</text>
+
+  <!-- Ready to send -->
+  <rect class="card" x="384" y="36" width="200" height="150" rx="12"/>
+  <text class="eyebrow" x="400" y="60">READY TO SEND</text>
+  <rect class="field" x="400" y="74" width="168" height="34" rx="8"/>
+  <text class="ink" x="412" y="96" font-size="13">Ship the fix tonight</text>
+  <rect class="pill" x="400" y="118" width="168" height="28" rx="14"/>
+  <text class="remap" x="484" y="137" text-anchor="middle" font-size="12.5" font-weight="600">↩ Press again to send</text>
+  <text class="ink" x="400" y="168" font-size="13.5">Pasted, 4 s to send</text>
+
+  <!-- click 3 -->
+  <line class="line" x1="590" y1="111" x2="617" y2="111" marker-end="url(#three-clicks-arrow)"/>
+  <text class="accent-text" x="604" y="101" text-anchor="middle" font-size="12.5" font-weight="600">click</text>
+
+  <!-- Sent -->
+  <rect class="card" x="624" y="36" width="200" height="150" rx="12"/>
+  <text class="eyebrow" x="640" y="60">SENT</text>
+  <rect class="sent" x="652" y="74" width="156" height="34" rx="14"/>
+  <text class="on-sent" x="730" y="96" text-anchor="middle" font-size="13">Ship the fix tonight</text>
+  <rect class="key" x="728" y="118" width="80" height="28" rx="6"/>
+  <text class="ink mono" x="768" y="137" text-anchor="middle" font-size="12">return ↩</text>
+  <text class="ink" x="640" y="168" font-size="13.5">Return pressed for you</text>
+
+  <!-- back to idle -->
+  <path class="line-muted" d="M484 186 V214 M724 186 V214 H54 V170" marker-end="url(#three-clicks-arrow-muted)"/>
+  <text class="muted" x="424" y="238" text-anchor="middle" font-size="12.5">back to idle after sending, or after 4 s with no click</text>
+</svg>
