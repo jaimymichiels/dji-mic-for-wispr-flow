@@ -1,0 +1,39 @@
+{
+  "title": "DJI Mic Mini transmitter button",
+  "rules": [
+    {
+      "description": "DJI Mic button -> F18 (pairs with hammerspoon/dji_wispr.lua, keeps press-again-to-send)",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": { "consumer_key_code": "volume_increment", "modifiers": { "optional": ["any"] } },
+          "to": [{ "key_code": "f18" }],
+          "conditions": [{ "type": "device_if", "identifiers": [{ "vendor_id": 11427, "product_id": 16401 }] }]
+        },
+        {
+          "type": "basic",
+          "from": { "consumer_key_code": "volume_decrement", "modifiers": { "optional": ["any"] } },
+          "to": [{ "key_code": "f18" }],
+          "conditions": [{ "type": "device_if", "identifiers": [{ "vendor_id": 11427, "product_id": 16401 }] }]
+        }
+      ]
+    },
+    {
+      "description": "DJI Mic button -> Fn+Space (Wispr Flow's default hands-free shortcut, no Hammerspoon)",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": { "consumer_key_code": "volume_increment", "modifiers": { "optional": ["any"] } },
+          "to": [{ "key_code": "spacebar", "modifiers": ["fn"] }],
+          "conditions": [{ "type": "device_if", "identifiers": [{ "vendor_id": 11427, "product_id": 16401 }] }]
+        },
+        {
+          "type": "basic",
+          "from": { "consumer_key_code": "volume_decrement", "modifiers": { "optional": ["any"] } },
+          "to": [{ "key_code": "spacebar", "modifiers": ["fn"] }],
+          "conditions": [{ "type": "device_if", "identifiers": [{ "vendor_id": 11427, "product_id": 16401 }] }]
+        }
+      ]
+    }
+  ]
+}
