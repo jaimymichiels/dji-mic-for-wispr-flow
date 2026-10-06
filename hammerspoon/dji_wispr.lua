@@ -12,7 +12,7 @@ local DJI_KEY_MAPPING = '{"UserKeyMapping":['
 -- The HID service registers after USB attach or wake; mapping earlier matches nothing.
 local SERVICE_SETTLE_SECONDS = 1.5
 -- A press this soon after stopping sends Return instead of starting a new dictation.
-local SEND_WINDOW_SECONDS = 4
+local SEND_WINDOW_SECONDS = 8
 -- Keep the send hint centered on the active display.
 local SEND_WIDGET_SCREEN_Y = 0.5
 

@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/images/three-clicks.svg" width="848" alt="Click the transmitter button and Wispr starts listening. Click again and it stops and pastes your text. Click a third time within 4 seconds and Return is pressed, sending the message. After sending, or after 4 seconds with no click, it goes back to idle.">
+  <img src="docs/images/three-clicks.svg" width="848" alt="Click the transmitter button and Wispr starts listening. Click again and it stops and pastes your text. Click a third time within 8 seconds and Return is pressed, sending the message. After sending, or after 8 seconds with no click, it goes back to idle.">
 </p>
 
 It uses a macOS built-in tool (`hidutil`) and a small [Hammerspoon](https://www.hammerspoon.org) module:
@@ -22,7 +22,7 @@ It uses a macOS built-in tool (`hidutil`) and a small [Hammerspoon](https://www.
 
 Wait for your text to appear before the third click. A click before Wispr pastes sends Return too early.
 
-After stopping, a compact dark pill appears in the screen center with “Press again to send” and a four-second countdown. Its ring shrinks as the send window runs out; the hint disappears when you send or the time expires.
+After stopping, a compact dark pill appears in the screen center with “Press again to send” and an eight-second countdown. Its ring shrinks as the send window runs out; the hint disappears when you send or the time expires.
 
 ## Requirements
 

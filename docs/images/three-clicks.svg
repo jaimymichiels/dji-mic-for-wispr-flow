@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 848 256" width="848" height="256" role="img" aria-labelledby="three-clicks-title three-clicks-desc">
   <title id="three-clicks-title">One button, three clicks</title>
-  <desc id="three-clicks-desc">Click the transmitter button and Wispr Flow starts listening. Click again and it stops and pastes your text. Click a third time within 4 seconds and Return is pressed, sending the message. After sending, or after 4 seconds with no click, it goes back to idle.</desc>
+  <desc id="three-clicks-desc">Click the transmitter button and Wispr Flow starts listening. Click again and it stops and pastes your text. Click a third time within 8 seconds and Return is pressed, sending the message. After sending, or after 8 seconds with no click, it goes back to idle.</desc>
   <style>
     text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
@@ -99,7 +99,7 @@
   <text class="ink" x="412" y="96" font-size="13">Ship the fix tonight</text>
   <rect class="pill" x="400" y="118" width="168" height="28" rx="14"/>
   <text class="remap" x="484" y="137" text-anchor="middle" font-size="12.5" font-weight="600">↩ Press again to send</text>
-  <text class="ink" x="400" y="168" font-size="13.5">Pasted, 4 s to send</text>
+  <text class="ink" x="400" y="168" font-size="13.5">Pasted, 8 s to send</text>
 
   <!-- click 3 -->
   <line class="line" x1="590" y1="111" x2="617" y2="111" marker-end="url(#three-clicks-arrow)"/>
@@ -116,5 +116,5 @@
 
   <!-- back to idle -->
   <path class="line-muted" d="M484 186 V214 M724 186 V214 H54 V170" marker-end="url(#three-clicks-arrow-muted)"/>
-  <text class="muted" x="424" y="238" text-anchor="middle" font-size="12.5">back to idle after sending, or after 4 s with no click</text>
+  <text class="muted" x="424" y="238" text-anchor="middle" font-size="12.5">back to idle after sending, or after 8 s with no click</text>
 </svg>
