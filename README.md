@@ -22,6 +22,8 @@ It uses a macOS built-in tool (`hidutil`) and a small [Hammerspoon](https://www.
 
 Wait for your text to appear before the third click. A click before Wispr pastes sends Return too early.
 
+After stopping, a compact dark pill appears in the screen center with “Press again to send” and a four-second countdown. Its ring shrinks as the send window runs out; the hint disappears when you send or the time expires.
+
 ## Requirements
 
 - macOS (tested on 27.0)
@@ -84,6 +86,7 @@ Everything to change is at the top of [`hammerspoon/dji_wispr.lua`](hammerspoon/
 - **A different device.** A foot pedal, a macro pad or another wireless receiver works the same way. Find its IDs with `hidutil list`, then update `DJI_VENDOR_ID`, `DJI_PRODUCT_ID` and `DJI_MATCHING`. If it doesn't send volume keys, also change the sources in `DJI_KEY_MAPPING`.
 - **A different key.** If something already uses F18, switch the destination in `DJI_KEY_MAPPING` to F19 (`0x70000006E`) or F20 (`0x70000006F`), and change the key in `hs.hotkey.bind` to match.
 - **A longer send window.** Raise `SEND_WINDOW_SECONDS`.
+- **A different hint position.** Change `SEND_WIDGET_SCREEN_Y` (`0.5` centers it vertically on the usable screen).
 - **A different dictation app.** Point `open_wispr_route` at that app's URL scheme or shortcut.
 
 ## Troubleshooting
