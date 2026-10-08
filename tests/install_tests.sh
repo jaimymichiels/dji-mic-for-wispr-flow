@@ -20,6 +20,19 @@ for required_line in 'require("hs.ipc")' 'require("dji_wispr").start()' 'require
   [[ "$(grep -cxF "$required_line" "$config_directory/init.lua")" == 1 ]]
 done
 
+for installer in install.sh install_battery.sh; do
+  config_directory="$test_directory/no final newline-$installer"
+  mkdir -p "$config_directory"
+  printf '%s\n' 'require("hs.ipc")' 'require("dji_wispr").start()' > "$config_directory/init.lua"
+  printf '%s' '-- Local configuration' >> "$config_directory/init.lua"
+  DJI_HAMMERSPOON_DIR="$config_directory" "$repository_root/scripts/$installer" --no-reload >/dev/null
+  grep -qxF -- '-- Local configuration' "$config_directory/init.lua"
+  grep -qxF 'require("dji_battery").start()' "$config_directory/init.lua"
+  cp "$config_directory/init.lua" "$test_directory/no-newline-$installer.lua"
+  DJI_HAMMERSPOON_DIR="$config_directory" "$repository_root/scripts/$installer" --no-reload >/dev/null
+  cmp -s "$test_directory/no-newline-$installer.lua" "$config_directory/init.lua"
+done
+
 legacy_directory="$test_directory/legacy"
 config_directory="$test_directory/migrated install"
 mkdir -p "$legacy_directory" "$config_directory"
@@ -39,4 +52,4 @@ rm -rf "$legacy_directory"
 [[ -f "$config_directory/dji_wispr.lua" && -x "$config_directory/bin/dji_battery" ]]
 DJI_HAMMERSPOON_DIR="$config_directory" "$repository_root/scripts/install_battery.sh" --no-reload >/dev/null
 grep -qxF -- '-- Custom dictation module' "$config_directory/dji_wispr.lua"
-echo "Installation checks passed (copies, repeat updates, preserved config and symlink migration)."
+echo "Installation checks passed (copies, repeat updates, preserved config, missing final newline and symlink migration)."

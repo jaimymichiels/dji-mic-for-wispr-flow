@@ -207,9 +207,9 @@ function dji_battery.start()
       message = receiver_present and "Reading DJI transmitter batteries…" or "Connect the DJI receiver using USB-C." })
   end):start()
   render({ state = "waiting", transmitters = {}, message = "Reading DJI transmitter batteries…" })
-  previous_shutdown = hs.shutdownCallback
+  local previous = hs.shutdownCallback
+  previous_shutdown = previous
   shutdown_callback = function()
-    local previous = previous_shutdown
     dji_battery.stop()
     if previous then previous() end
   end

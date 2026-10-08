@@ -101,4 +101,18 @@ reader.finished(1, "", "reader failed")
 assert(item.visible and retry.active and item.tooltip:find("reconnecting", 1, true))
 fake_hs.shutdownCallback()
 assert(item.deleted and not watcher.active and not retry.active and shutdown_calls == 1)
-print("Battery menu checks passed (estimates, unknown data, USB visibility, reconnects and lifecycle).")
+
+-- Other modules may wrap our callback before the user reconnects the reader.
+module.start()
+local battery_shutdown = fake_hs.shutdownCallback
+local wrapper_calls = 0
+fake_hs.shutdownCallback = function()
+  wrapper_calls = wrapper_calls + 1
+  assert(wrapper_calls == 1, "A later shutdown wrapper must not recurse after reconnect")
+  battery_shutdown()
+end
+module.start()
+fake_hs.shutdownCallback()
+assert(wrapper_calls == 1 and shutdown_calls == 2, "Each shutdown predecessor must run once")
+assert(item.deleted and not watcher.active and not reader.active)
+print("Battery menu checks passed (estimates, unknown data, USB visibility, reconnects, lifecycle and shutdown chaining).")

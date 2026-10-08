@@ -66,6 +66,10 @@ if [[ "$battery_only" == false ]]; then required_lines+=('require("dji_wispr").s
 required_lines+=('require("dji_battery").start()')
 for required_line in "${required_lines[@]}"; do
   if ! grep -qxF "$required_line" "$init_file"; then
+    # Keep the new statement out of an existing final line comment.
+    if [[ -s "$init_file" && -n "$(tail -c 1 "$init_file")" ]]; then
+      printf '\n' >> "$init_file"
+    fi
     printf '%s\n' "$required_line" >> "$init_file"
   fi
 done
