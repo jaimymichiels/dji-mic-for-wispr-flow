@@ -37,6 +37,10 @@ test-battery:
 test-battery-menu:
     /Applications/Hammerspoon.app/Contents/Frameworks/hs/hs -c 'assert(loadfile("{{justfile_directory()}}/tests/battery_menu_tests.lua"))("{{justfile_directory()}}/hammerspoon/dji_battery.lua")' | grep -E '^Battery menu checks passed '
 
+# Check send hint cancellation and button behavior without real dictation or keystrokes
+test-wispr-widget:
+    /Applications/Hammerspoon.app/Contents/Frameworks/hs/hs -c 'assert(loadfile("{{justfile_directory()}}/tests/wispr_widget_tests.lua"))("{{justfile_directory()}}/hammerspoon/dji_wispr.lua")' | grep -E '^Wispr widget checks passed '
+
 # Check installation and migration from legacy symlinks in an isolated directory
 test-install: build-battery
     tests/install_tests.sh
