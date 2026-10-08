@@ -77,6 +77,7 @@ local function open_send_window()
   close_send_window()
   local screen_frame = hs.screen.mainScreen():frame()
   local width, height, padding = 270, 48, 12
+  local cancel_x, cancel_y = padding + width - 4, padding + 4
   local started_at = hs.timer.absoluteTime()
   send_window_canvas = hs.canvas.new({
     x = screen_frame.x + (screen_frame.w - width) / 2 - padding,
@@ -85,6 +86,21 @@ local function open_send_window()
     h = height + padding * 2,
   }):level("overlay"):behavior({ "canJoinAllSpaces", "fullScreenAuxiliary" })
     :canvasMouseEvents(false, false, false, false)
+    :clickActivating(false)
+    :mouseCallback(function(canvas, message, element_id)
+      if canvas ~= send_window_canvas or element_id ~= "cancel" then return end
+      if message == "mouseEnter" or message == "mouseExit" then
+        local hovering = message == "mouseEnter"
+        canvas.cancel_background.fillColor = { white = hovering and 0.18 or 0.08, alpha = 0.97 }
+        canvas.cancel_background.strokeColor = { white = 1, alpha = hovering and 0.4 or 0.22 }
+        canvas.cancel_cross_1.strokeColor = { white = hovering and 0.95 or 0.75 }
+        canvas.cancel_cross_2.strokeColor = { white = hovering and 0.95 or 0.75 }
+      elseif message == "mouseUp" then
+        close_send_window()
+        dictation_state = DictationState.idle
+        log.i("send window cancelled")
+      end
+    end)
   send_window_canvas:appendElements(
     {
       type = "rectangle", action = "strokeAndFill",
@@ -143,6 +159,34 @@ local function open_send_window()
       id = "countdown", type = "text", text = string.format("%ds", math.ceil(SEND_WINDOW_SECONDS)),
       textSize = 11, textAlignment = "center", textColor = { white = 0.9 },
       frame = { x = padding + 220, y = padding + 16, w = 36, h = 18 },
+    },
+    {
+      id = "cancel_background", type = "circle", action = "strokeAndFill", radius = 9,
+      center = { x = cancel_x, y = cancel_y },
+      fillColor = { white = 0.08, alpha = 0.97 },
+      strokeColor = { white = 1, alpha = 0.22 }, strokeWidth = 1,
+    },
+    {
+      id = "cancel_cross_1", type = "segments", action = "stroke",
+      coordinates = {
+        { x = cancel_x - 3, y = cancel_y - 3 },
+        { x = cancel_x + 3, y = cancel_y + 3 },
+      },
+      strokeColor = { white = 0.75 }, strokeWidth = 1.25, strokeCapStyle = "round",
+    },
+    {
+      id = "cancel_cross_2", type = "segments", action = "stroke",
+      coordinates = {
+        { x = cancel_x + 3, y = cancel_y - 3 },
+        { x = cancel_x - 3, y = cancel_y + 3 },
+      },
+      strokeColor = { white = 0.75 }, strokeWidth = 1.25, strokeCapStyle = "round",
+    },
+    {
+      -- Keep the cross small while giving it an easier-to-click target.
+      id = "cancel", type = "rectangle", action = "fill",
+      frame = { x = cancel_x - 12, y = cancel_y - 12, w = 24, h = 24 },
+      fillColor = { alpha = 0 }, trackMouseByBounds = true, trackMouseUp = true, trackMouseEnterExit = true,
     }
   ):show()
   -- Use elapsed time so delayed callbacks don't stretch the visible countdown.

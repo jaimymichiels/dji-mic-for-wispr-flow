@@ -22,7 +22,7 @@ It uses a macOS built-in tool (`hidutil`) and [Hammerspoon](https://www.hammersp
 
 Wait for your text to appear before the third click. A click before Wispr pastes sends Return too early.
 
-After stopping, a compact dark pill appears in the screen center with “Press again to send” and an eight-second countdown. Its ring shrinks as the send window runs out; the hint disappears when you send or the time expires.
+After stopping, a compact dark pill appears in the screen center with “Press again to send” and an eight-second countdown. Its ring shrinks as the send window runs out; the hint disappears when you send or the time expires. Click the small × at its upper-right corner to cancel the send window immediately. Your dictated text stays in place, and the next transmitter press starts a new dictation.
 
 ## Requirements
 
@@ -162,6 +162,7 @@ Everything to change is at the top of [`hammerspoon/dji_wispr.lua`](hammerspoon/
 |---|---|
 | `just test-battery` | Checks the USB battery protocol decoder. |
 | `just test-battery-menu` | Checks menu estimates, USB visibility and lifecycle using isolated device events. Requires Hammerspoon with IPC enabled. |
+| `just test-wispr-widget` | Checks close-button cancellation, countdown and send behavior without starting dictation or sending keystrokes. Requires Hammerspoon with IPC enabled. |
 | `just test-install` | Checks clean installation, repeat updates and migration from old symlinks in a temporary directory. |
 | `just test-remap` | Checks that the button arrives as F18 without changing the volume. Needs no permissions; quit Hammerspoon first. |
 | `just probe` | A deeper two-phase probe. Needs Input Monitoring for your terminal; quit Hammerspoon first. |
