@@ -14,8 +14,35 @@ build:
     swiftc -O -o "{{build_directory}}/f18_listener" probes/f18_listener.swift
     swiftc -O -o "{{build_directory}}/mic_in_use" probes/mic_in_use.swift
 
-# Symlink the module into ~/.hammerspoon and reload Hammerspoon
-install:
+# Compile the read-only DJI transmitter battery helper (no external dependencies)
+build-battery:
+    mkdir -p "{{build_directory}}"
+    swiftc -O -module-cache-path "{{build_directory}}/swift-module-cache" -o "{{build_directory}}/dji_battery" native/dji_battery_protocol.swift native/dji_battery.swift
+
+# Install or update the battery indicator without reloading the Wispr module
+install-battery: build-battery
+    scripts/install_battery.sh
+
+# Read one live transmitter battery status as JSON
+battery: build-battery
+    "{{build_directory}}/dji_battery"
+
+# Check packet framing, corruption handling, transmitter identities and battery gauges
+test-battery:
+    mkdir -p "{{build_directory}}"
+    swiftc -module-cache-path "{{build_directory}}/swift-module-cache" -o "{{build_directory}}/battery_protocol_tests" native/dji_battery_protocol.swift tests/battery_protocol_tests.swift
+    "{{build_directory}}/battery_protocol_tests"
+
+# Check menu runtime estimates, USB visibility and reader lifecycle in Hammerspoon
+test-battery-menu:
+    /Applications/Hammerspoon.app/Contents/Frameworks/hs/hs -c 'assert(loadfile("{{justfile_directory()}}/tests/battery_menu_tests.lua"))("{{justfile_directory()}}/hammerspoon/dji_battery.lua")' | grep -E '^Battery menu checks passed '
+
+# Check installation and migration from legacy symlinks in an isolated directory
+test-install: build-battery
+    tests/install_tests.sh
+
+# Install self-contained modules, logo and native reader, then reload Hammerspoon
+install: build-battery
     scripts/install.sh
 
 # Permission-free check that the DJI button arrives as F18 (quit Hammerspoon first)
@@ -40,8 +67,9 @@ console:
 
 # Lint the scripts, syntax-check the module, validate the Karabiner rules and diagrams
 lint:
-    shellcheck scripts/*.sh
+    shellcheck scripts/*.sh tests/*.sh
     luajit -e "assert(loadfile('hammerspoon/dji_wispr.lua'))"
+    luajit -e "assert(loadfile('hammerspoon/dji_battery.lua'))"
     python3 -m json.tool karabiner/dji_mic_wispr.json >/dev/null
     xmllint --noout docs/images/*.svg
 
